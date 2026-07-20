@@ -1,0 +1,29 @@
+# robots.txt — Estúdio Filme
+User-agent: *
+Allow: /
+
+# Buscadores
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+
+# Robôs de busca por IA
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+
+# Robôs de treinamento de IA
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.estudiofilme.com.br/sitemap.xml
