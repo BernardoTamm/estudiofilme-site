@@ -6,6 +6,8 @@
   'use strict';
   var BASE = 'https://seupodcast-saas-production.up.railway.app/l';
   var SITE = (location.hostname || '').replace(/^www\./, '');
+  // paginas com WhatsApp proprio por caminho (ex.: Estudio Filme Vitoria -> numero de Vitoria)
+  if (/^\/vitoria(\/|$)/i.test(location.pathname || '')) SITE += '/vitoria';
   var KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content',
     'gclid','gclsrc','wbraid','gbraid','gad_source','fbclid','keyword',
     'campaignid','adgroupid','matchtype','device','network','creative'];
