@@ -22,20 +22,21 @@
   }
   var lt = {}; try{ lt = JSON.parse(rc('spt_lt')||'{}'); }catch(e){}
   function guessDest(){var p=(location.pathname||'').toLowerCase();var m=['podcast','cursos','lives','conteudo','localizacao','contato'];for(var i=0;i<m.length;i++){if(p.indexOf(m[i])>=0)return m[i];}return '';}
-  function params(dest){
+  function params(dest, sOverride){
     var p = new URLSearchParams(); var src = {}; Object.assign(src, ft, lt);
     Object.keys(src).forEach(function(k){ if(src[k] && k.charAt(0)!=='_') p.set(k, src[k]); });
     if(!p.get('utm_term') && p.get('keyword')) p.set('utm_term', p.get('keyword'));
     if(src._ref && !p.get('utm_source')) p.set('ref', src._ref);
-    p.set('s', SITE); if(dest) p.set('d', dest);
+    p.set('s', sOverride || SITE); if(dest) p.set('d', dest);
     return p.toString();
   }
   function isTarget(a){var h=a.getAttribute('href')||'';return /tintim\.link|wa\.me|api\.whatsapp\.com/i.test(h)||h.indexOf('/l?')>=0||h.indexOf(BASE)>=0||a.classList.contains('js-wa');}
   function rewrite(){
     var as=document.querySelectorAll('a[href]');
     for(var i=0;i<as.length;i++){var a=as[i]; if(!isTarget(a)) continue;
-      var d=a.getAttribute('data-wa')||a.getAttribute('data-dest')||guessDest();
-      a.setAttribute('href', BASE+'?'+params(d)); a.setAttribute('rel','noopener'); a.setAttribute('target','_blank');
+      var oq=new URLSearchParams((a.getAttribute('href')||'').split('?')[1]||'');
+      var d=a.getAttribute('data-wa')||a.getAttribute('data-dest')||oq.get('d')||guessDest();
+      a.setAttribute('href', BASE+'?'+params(d, oq.get('s'))); a.setAttribute('rel','noopener'); a.setAttribute('target','_blank');
     }
   }
   /* ---- Envia o clique + a ORIGEM do cliente para o GTM (dataLayer) ---- */
